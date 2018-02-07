@@ -23,28 +23,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ci_sessions`
+-- Table structure for table `tbl_log`
 --
 
-CREATE TABLE `ci_sessions` (
-  `session_id` varchar(40) NOT NULL DEFAULT '0',
-  `ip_address` varchar(45) NOT NULL DEFAULT '0',
-  `user_agent` varchar(120) NOT NULL,
-  `last_activity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_last_login`
---
-
-CREATE TABLE `tbl_last_login` (
+CREATE TABLE `tbl_log` (
   `id` bigint(20) NOT NULL,
   `userId` bigint(20) NOT NULL,
-  `sessionData` varchar(2048) NOT NULL,
-  `machineIp` varchar(1024) NOT NULL,
+  `userName` varchar(128) NOT NULL,
+  `process` varchar(1024) NOT NULL,
+  `processFunction` varchar(1024) NOT NULL,
+  `userRoleId` bigint(20) NOT NULL,
+  `userRoleText` varchar(128) NOT NULL,
+  `userIp` varchar(1024) NOT NULL,
   `userAgent` varchar(128) NOT NULL,
   `agentString` varchar(1024) NOT NULL,
   `platform` varchar(128) NOT NULL,
@@ -52,6 +42,22 @@ CREATE TABLE `tbl_last_login` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_task`
+--
+
+CREATE TABLE `tbl_task` (
+  `id` bigint(20) NOT NULL,
+  `title` varchar(1024) NOT NULL,
+  `comment`varchar(2048) NOT NULL,
+  `permalink` varchar(1024) NOT NULL,
+  `endDtm` datetime,
+  `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 
 --
 -- Table structure for table `tbl_reset_password`
@@ -124,22 +130,21 @@ INSERT INTO `tbl_users` (`userId`, `email`, `password`, `name`, `mobile`, `roleI
 --
 
 --
--- Indexes for table `ci_sessions`
---
-ALTER TABLE `ci_sessions`
-  ADD PRIMARY KEY (`session_id`),
-  ADD KEY `last_activity_idx` (`last_activity`);
-
---
--- Indexes for table `tbl_last_login`
---
-ALTER TABLE `tbl_last_login`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tbl_reset_password`
 --
 ALTER TABLE `tbl_reset_password`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_log`
+--
+ALTER TABLE `tbl_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_log`
+--
+ALTER TABLE `tbl_task`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -159,10 +164,17 @@ ALTER TABLE `tbl_users`
 --
 
 --
--- AUTO_INCREMENT for table `tbl_last_login`
+-- AUTO_INCREMENT for table `tbl_log`
 --
-ALTER TABLE `tbl_last_login`
+ALTER TABLE `tbl_log`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_reset_password`
+--
+ALTER TABLE `tbl_task`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tbl_reset_password`
 --

@@ -18,9 +18,8 @@ class Admin extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
-
         $this->datas();
-        
+
         if($this->isAdmin() == TRUE)
         {
             $this->accesslogincontrol();
@@ -67,7 +66,6 @@ class Admin extends BaseController
      */
     function addNew()
     {
-            $this->load->model('user_model');
             $data['roles'] = $this->user_model->getUserRoles();
             
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Ekle';
@@ -104,8 +102,7 @@ class Admin extends BaseController
                 
                 $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId, 'name'=> $name,
                                     'mobile'=>$mobile, 'createdBy'=>$this->vendorId, 'createdDtm'=>date('Y-m-d H:i:s'));
-                
-                $this->load->model('user_model');
+                                    
                 $result = $this->user_model->addNewUser($userInfo);
                 
                 if($result > 0)

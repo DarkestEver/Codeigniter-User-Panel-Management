@@ -106,12 +106,6 @@
             </li>
             <li class="treeview">
               <a href="#" >
-                <i class="fa fa-plane"></i>
-                <span>Yeni Görev</span>
-              </a>
-            </li>
-            <li class="treeview">
-              <a href="#" >
                 <i class="fa fa-ticket"></i>
                 <span>Tüm Görevler</span>
               </a>
@@ -122,8 +116,8 @@
             ?>
             <li class="treeview">
               <a href="#" >
-                <i class="fa fa-upload"></i>
-                <span>Görev Dosyaları</span>
+                <i class="fa fa-plane"></i>
+                <span>Yeni Görev</span>
               </a>
             </li>
             <?php
@@ -138,9 +132,9 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="#" >
-                <i class="fa fa-files-o"></i>
-                <span>Hatalar</span>
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span>Log Kayıtları</span>
               </a>
             </li>
             <?php
