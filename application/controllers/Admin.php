@@ -17,6 +17,10 @@ class Admin extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('user_model');
+
+        $this->datas();
+        
         if($this->isAdmin() == TRUE)
         {
             $this->accesslogincontrol();

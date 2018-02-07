@@ -37,16 +37,7 @@ class BaseController extends CI_Controller {
 		if (! isset ( $isLoggedIn ) || $isLoggedIn != TRUE) {
 			redirect ( 'login' );
 		} else {
-			$this->role = $this->session->userdata ( 'role' );
-			$this->vendorId = $this->session->userdata ( 'userId' );
-			$this->name = $this->session->userdata ( 'name' );
-			$this->roleText = $this->session->userdata ( 'roleText' );
-			$this->lastLogin = $this->session->userdata ( 'lastLogin' );
-			
-			$this->global ['name'] = $this->name;
-			$this->global ['role'] = $this->role;
-			$this->global ['role_text'] = $this->roleText;
-			$this->global ['last_login'] = $this->lastLogin;
+			$this->datas();
 		}
 	}
 	
@@ -138,5 +129,19 @@ class BaseController extends CI_Controller {
 				"page" => $page,
 				"segment" => $segment
 		);
+	}
+
+	function datas()
+	{
+		$this->role = $this->session->userdata ( 'role' );
+		$this->vendorId = $this->session->userdata ( 'userId' );
+		$this->name = $this->session->userdata ( 'name' );
+		$this->roleText = $this->session->userdata ( 'roleText' );
+		$this->lastLogin = $this->session->userdata ( 'lastLogin' );
+		
+		$this->global ['name'] = $this->name;
+		$this->global ['role'] = $this->role;
+		$this->global ['role_text'] = $this->roleText;
+		$this->global ['last_login'] = $this->lastLogin;
 	}
 }
