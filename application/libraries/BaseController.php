@@ -73,17 +73,6 @@ class BaseController extends CI_Controller {
 	}
 	
 	/**
-	 * This function is used to load the set of views
-	 */
-	function loadThis() {
-		$this->global ['pageTitle'] = 'BSEU : Yetkisiz Giriş';
-		
-		$this->load->view ( 'includes/header', $this->global );
-		$this->load->view ( 'access' );
-		$this->load->view ( 'includes/footer' );
-	}
-	
-	/**
 	 * This function is used to logged out user from system
 	 */
 	function logout() {
