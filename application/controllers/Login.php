@@ -1,5 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
+require APPPATH . '/libraries/BaseController.php';
 /**
  * Class : Login (LoginController)
  * Login class to control to authenticate user credentials and starts user's session.
@@ -7,7 +8,7 @@
  * @version : 1.1
  * @since : 15 November 2016
  */
-class Login extends CI_Controller
+class Login extends BaseController
 {
     /**
      * This is default constructor of the class
@@ -36,23 +37,17 @@ class Login extends CI_Controller
         }
         else
         {
+            $process = 'Hata';
+            $processFunction = 'Login/error';
+            $this->logrecord($process,$processFunction);
             redirect('pageNotFound');
         }
     }
 
     public function noaccess() {
         
-        $this->role = $this->session->userdata ( 'role' );
-        $this->vendorId = $this->session->userdata ( 'userId' );
-        $this->name = $this->session->userdata ( 'name' );
-        $this->roleText = $this->session->userdata ( 'roleText' );
-        $this->lastLogin = $this->session->userdata ( 'lastLogin' );
-        
-        $this->global ['pageTitle'] = 'BSEU : Yetkisiz Giriş';
-        $this->global ['name'] = $this->name;
-        $this->global ['role'] = $this->role;
-        $this->global ['role_text'] = $this->roleText;
-        $this->global ['last_login'] = $this->lastLogin;
+        $this->global['pageTitle'] = 'BSEU : Erişim Reddedildi';
+        $this->datas();
 
         $this->load->view ( 'includes/header', $this->global );
 		$this->load->view ( 'access' );
@@ -103,6 +98,9 @@ class Login extends CI_Controller
                 foreach ($result as $res)
                 {
                     $lastLogin = $this->login_model->lastLoginInfo($res->userId);
+                    
+                    $process = 'Giriş';
+                    $processFunction = 'Login/loginMe';
 
                     $sessionArray = array('userId'=>$res->userId,                    
                                             'role'=>$res->roleId,
@@ -115,11 +113,9 @@ class Login extends CI_Controller
                     $this->session->set_userdata($sessionArray);
 
                     unset($sessionArray['userId'], $sessionArray['isLoggedIn'], $sessionArray['lastLogin']);
-
-                    $loginInfo = array("userId"=>$res->userId, "sessionData" => json_encode($sessionArray), "machineIp"=>$_SERVER['REMOTE_ADDR'], "userAgent"=>getBrowserAgent(), "agentString"=>$this->agent->agent_string(), "platform"=>$this->agent->platform());
-
-                    $this->login_model->lastLogin($loginInfo);
                     
+                    $this->logrecord($process,$processFunction);
+
                     redirect('/dashboard');
                 }
             }
@@ -193,6 +189,10 @@ class Login extends CI_Controller
                     }
 
                     $sendStatus = resetPasswordEmail($data1);
+
+                    $process = 'Şifre Sıfırlama İsteği';
+                    $processFunction = 'Login/resetPasswordUser';
+                    $this->logrecord($process,$processFunction);
 
                     if($sendStatus){
                         $status = "send";
@@ -271,9 +271,13 @@ class Login extends CI_Controller
             $is_correct = $this->login_model->checkActivationDetails($email, $activation_id);
             
             if($is_correct == 1)
-            {                
+            {               
                 $this->login_model->createPasswordUser($email, $password);
                 
+                $process = 'Şifre Sıfırlama';
+                $processFunction = 'Login/createPasswordUser';
+                $this->logrecord($process,$processFunction);
+
                 $status = 'success';
                 $message = 'Şifre başarıyla değiştirildi';
             }

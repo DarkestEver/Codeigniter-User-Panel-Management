@@ -1,7 +1,7 @@
 <div class="content-wrapper">    
     <section class="content-header">
       <h1>
-        Erşim Reddedildi
+        Erişim Reddedildi
         <small>Bu sayfaya giriş yetkiniz yok.</small>
       </h1>
     </section>

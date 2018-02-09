@@ -18,7 +18,7 @@ class User extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
-        $this->isLoggedIn();   
+        $this->isLoggedIn();
     }
     
     /**
@@ -84,7 +84,7 @@ class User extends BaseController
             
             if(empty($resultPas))
             {
-                $this->session->set_flashdata('nomatch', 'Your old password not correct');
+                $this->session->set_flashdata('nomatch', 'Eski şifreniz doğru değil');
                 redirect('loadChangePass');
             }
             else
@@ -94,8 +94,17 @@ class User extends BaseController
                 
                 $result = $this->user_model->changePassword($this->vendorId, $usersData);
                 
-                if($result > 0) { $this->session->set_flashdata('success', 'Password updation successful'); }
-                else { $this->session->set_flashdata('error', 'Password updation failed'); }
+                if($result > 0) {
+
+                    $process = 'Şifre Değiştirme';
+                    $processFunction = 'User/changePassword';
+                    $this->logrecord($process,$processFunction);
+
+                     $this->session->set_flashdata('success', 'Şifre değiştirme başarılı');
+                     }
+                else {
+                     $this->session->set_flashdata('error', 'Şifre değiştirme başarısız'); 
+                    }
                 
                 redirect('loadChangePass');
             }

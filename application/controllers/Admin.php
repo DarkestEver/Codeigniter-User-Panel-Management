@@ -36,6 +36,10 @@ class Admin extends BaseController
         }
         else
         {
+            $process = 'Erişim Reddi';
+            $processFunction = 'Admin/accesslogincontrol';
+            $this->logrecord($process,$processFunction);
+
             redirect(noaccess);
         }
 	}
@@ -56,6 +60,10 @@ class Admin extends BaseController
             
             $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
             
+            $process = 'Kullanıcı Listeleme';
+            $processFunction = 'Admin/userListing';
+            $this->logrecord($process,$processFunction);
+
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Listesi';
             
             $this->loadViews("users", $this->global, $data, NULL);
@@ -67,7 +75,7 @@ class Admin extends BaseController
     function addNew()
     {
             $data['roles'] = $this->user_model->getUserRoles();
-            
+
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Ekle';
 
             $this->loadViews("addNew", $this->global, $data, NULL);
@@ -107,6 +115,10 @@ class Admin extends BaseController
                 
                 if($result > 0)
                 {
+                    $process = 'Kullanıcı Ekleme';
+                    $processFunction = 'Admin/addNewUser';
+                    $this->logrecord($process,$processFunction);
+
                     $this->session->set_flashdata('success', 'Kullanıcı başarıyla oluşturuldu');
                 }
                 else
@@ -131,7 +143,7 @@ class Admin extends BaseController
             
             $data['roles'] = $this->user_model->getUserRoles();
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
-            
+
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Düzenle';
             
             $this->loadViews("editOld", $this->global, $data, NULL);
@@ -184,6 +196,10 @@ class Admin extends BaseController
                 
                 if($result == true)
                 {
+                    $process = 'Kullanıcı Güncelleme';
+                    $processFunction = 'Admin/editUser';
+                    $this->logrecord($process,$processFunction);
+
                     $this->session->set_flashdata('success', 'Kullanıcı başarıyla güncellendi');
                 }
                 else
@@ -206,7 +222,14 @@ class Admin extends BaseController
             
             $result = $this->user_model->deleteUser($userId, $userInfo);
             
-            if ($result > 0) { echo(json_encode(array('status'=>TRUE))); }
+            if ($result > 0) {
+                 echo(json_encode(array('status'=>TRUE)));
+
+                 $process = 'Kullanıcı Silme';
+                 $processFunction = 'Admin/deleteUser';
+                 $this->logrecord($process,$processFunction);
+
+                }
             else { echo(json_encode(array('status'=>FALSE))); }
     }
 
@@ -231,6 +254,10 @@ class Admin extends BaseController
             $returns = $this->paginationCompress ( "login-history/".$userId."/", $count, 5, 3);
             $data['userRecords'] = $this->user_model->loginHistory($userId, $searchText, $fromDate, $toDate, $returns["page"], $returns["segment"]);
             
+            $process = 'Log Görüntüleme';
+            $processFunction = 'Admin/loginHistoy';
+            $this->logrecord($process,$processFunction);
+
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
             
             $this->loadViews("loginHistory", $this->global, $data, NULL);      

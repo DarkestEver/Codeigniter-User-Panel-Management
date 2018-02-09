@@ -110,10 +110,10 @@ class Login_model extends CI_Model
      * This function used to save login information of user
      * @param array $loginInfo : This is users login information
      */
-    function lastLogin($loginInfo)
+    function loginsert($logInfo)
     {
         $this->db->trans_start();
-        $this->db->insert('tbl_last_login', $loginInfo);
+        $this->db->insert('tbl_log', $logInfo);
         $this->db->trans_complete();
     }
 
@@ -128,7 +128,7 @@ class Login_model extends CI_Model
         $this->db->where('BaseTbl.userId', $userId);
         $this->db->order_by('BaseTbl.id', 'DESC');
         $this->db->limit(1);
-        $query = $this->db->get('tbl_last_login as BaseTbl');
+        $query = $this->db->get('tbl_log as BaseTbl');
 
         return $query->row();
     }

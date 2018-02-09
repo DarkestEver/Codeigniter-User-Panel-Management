@@ -67,6 +67,11 @@ class BaseController extends CI_Controller {
 	 * This function is used to logged out user from system
 	 */
 	function logout() {
+
+		$process = 'Çıkış';
+        $processFunction = 'BaseController/logout';
+        $this->logrecord($process,$processFunction);
+
 		$this->session->sess_destroy ();
 		
 		redirect ( 'login' );
@@ -143,5 +148,24 @@ class BaseController extends CI_Controller {
 		$this->global ['role'] = $this->role;
 		$this->global ['role_text'] = $this->roleText;
 		$this->global ['last_login'] = $this->lastLogin;
+	}
+
+	function logrecord($process,$processFunction){
+		$this->datas();
+		$logInfo = array("userId"=>$this->vendorId,
+		"userName"=>$this->name,
+		"process"=>$process,
+		"processFunction"=>$processFunction,
+		"userRoleId"=>$this->role,
+		"userRoleText"=>$this->roleText,
+		"userIp"=>$_SERVER['REMOTE_ADDR'],
+		"userAgent"=>getBrowserAgent(),
+		"agentString"=>$this->agent->agent_string(),
+		"platform"=>$this->agent->platform()
+		);
+		   
+		
+		$this->load->model('login_model');
+		$this->login_model->loginsert($logInfo);
 	}
 }
