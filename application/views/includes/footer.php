@@ -25,5 +25,21 @@
             y.addClass('active');
             y.parent().addClass('active');
     </script>
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo base_url(); ?>assets/datatable/jquery.dataTables.min.js" type="text/javascript"> </script>
+    <script src="<?php echo base_url(); ?>assets/datatable/dataTables.bootstrap.min.js" type="text/javascript"> </script>
+    <script src="<?php echo base_url(); ?>assets/datatable/dataTables.responsive.js" type="text/javascript"> </script>
+
+    <!-- Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+    $('#dataTables-example').DataTable({
+		"language": {
+            "url": "<?php echo base_url(); ?>assets/datatable/Turkish.json"
+        },
+		responsive:true
+    });
+} );
+    </script>
   </body>
 </html>

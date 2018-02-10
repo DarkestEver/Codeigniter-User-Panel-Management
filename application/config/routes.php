@@ -22,9 +22,9 @@ $route['editOld'] = "admin/editOld";
 $route['editOld/(:num)'] = "admin/editOld/$1";
 $route['editUser'] = "admin/editUser";
 $route['deleteUser'] = "admin/deleteUser";
-$route['login-history'] = "admin/loginHistoy";
-$route['login-history/(:num)'] = "admin/loginHistoy/$1";
-$route['login-history/(:num)/(:num)'] = "admin/loginHistoy/$1/$2";
+$route['log-history'] = "admin/logHistory";
+$route['log-history/(:num)'] = "admin/logHistory/$1";
+$route['log-history/(:num)/(:num)'] = "admin/logHistory/$1/$2";
 
 $route['loadChangePass'] = "user/loadChangePass";
 $route['changePassword'] = "user/changePassword";

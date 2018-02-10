@@ -237,29 +237,18 @@ class Admin extends BaseController
      * This function used to show login history
      * @param number $userId : This is user id
      */
-    function loginHistoy($userId = NULL)
+    function logHistory($userId = NULL)
     {
             $userId = ($userId == NULL ? $this->session->userdata("userId") : $userId);
-            $searchText = $this->input->post('searchText');
-            $fromDate = $this->input->post('fromDate');
-            $toDate = $this->input->post('toDate');
             $data["userInfo"] = $this->user_model->getUserInfoById($userId);
-            $data['searchText'] = $searchText;
-            $data['fromDate'] = $fromDate;
-            $data['toDate'] = $toDate;
-            
-            $this->load->library('pagination');
-            
-            $count = $this->user_model->loginHistoryCount($userId, $searchText, $fromDate, $toDate);
-            $returns = $this->paginationCompress ( "login-history/".$userId."/", $count, 5, 3);
-            $data['userRecords'] = $this->user_model->loginHistory($userId, $searchText, $fromDate, $toDate, $returns["page"], $returns["segment"]);
+            $data['userRecords'] = $this->user_model->logHistory($userId);
             
             $process = 'Log Görüntüleme';
-            $processFunction = 'Admin/loginHistoy';
+            $processFunction = 'Admin/logHistory';
             $this->logrecord($process,$processFunction);
 
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
             
-            $this->loadViews("loginHistory", $this->global, $data, NULL);      
+            $this->loadViews("logHistory", $this->global, $data, NULL);      
     }
 }
