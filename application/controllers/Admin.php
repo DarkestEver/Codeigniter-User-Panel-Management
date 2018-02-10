@@ -19,30 +19,29 @@ class Admin extends BaseController
         parent::__construct();
         $this->load->model('user_model');
         $this->datas();
-
-        if($this->isAdmin() == TRUE)
+        $isLoggedIn = $this->session->userdata('isLoggedIn');
+        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
         {
-            $this->accesslogincontrol();
+            redirect('login');
+        }
+        else
+        {
+            if($this->isAdmin() == TRUE)
+            {
+                $this->accesslogincontrol();
+            }
         }
     }
 
     public function accesslogincontrol()
     {
-        $isLoggedIn = $this->session->userdata('isLoggedIn');
-        
-        if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
-        {
-            $this->load->view('login');
-        }
-        else
-        {
             $process = 'Erişim Reddi';
             $processFunction = 'Admin/accesslogincontrol';
             $this->logrecord($process,$processFunction);
 
             redirect(noaccess);
-        }
-	}
+    }
+	
     
      /**
      * This function is used to load the user list

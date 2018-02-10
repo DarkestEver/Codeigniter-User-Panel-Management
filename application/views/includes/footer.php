@@ -26,17 +26,47 @@
             y.parent().addClass('active');
     </script>
     <!-- DataTables JavaScript -->
-    <script src="<?php echo base_url(); ?>assets/datatable/jquery.dataTables.min.js" type="text/javascript"> </script>
-    <script src="<?php echo base_url(); ?>assets/datatable/dataTables.bootstrap.min.js" type="text/javascript"> </script>
-    <script src="<?php echo base_url(); ?>assets/datatable/dataTables.responsive.js" type="text/javascript"> </script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/af-2.2.2/b-1.5.1/b-colvis-1.5.1/fc-3.2.4/fh-3.1.3/r-2.2.1/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.16/af-2.2.2/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-html5-1.5.1/b-print-1.5.1/cr-1.4.1/fc-3.2.4/fh-3.1.3/kt-2.3.2/r-2.2.1/rg-1.0.2/rr-1.2.3/sc-1.4.4/sl-1.2.5/datatables.min.js"></script>
     <!-- Tables - Use for reference -->
     <script>
     $(document).ready(function() {
     $('#dataTables-example').DataTable({
-		"language": {
-            "url": "<?php echo base_url(); ?>assets/datatable/Turkish.json"
-        },
+             //Dom Gösterim şekli B-> buttonlar l-> lengthMenu f-> filtre vs.
+             dom:
+                 "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-6 col-md-4'i><'col-6 col-md-4'p><'col-6 col-md-4 text-right'B>>",
+             lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "Hepsi"]],
+ 
+             //Dil
+             language: {
+                 select: {
+                     rows: "%d satır seçildi."
+                 },
+ 
+                 url: "http://cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
+             },
+             // true ise row seçilebilir olur
+             select: true,
+             buttons: [
+                 {
+                     extend: "print",
+                     text: "Yazdır",
+                     exportOptions: { orthogonal: 'export', columns: ':visible' },
+                 },
+                 {
+                     extend: 'excelHtml5',
+                     exportOptions: { orthogonal: 'export' },
+                     text: "Excel",
+                 },
+                 {
+                     extend: 'pdfHtml5',
+                     exportOptions: { orthogonal: 'export' }, text: "PDF",
+                 }
+             ],
 		responsive:true
     });
 } );
