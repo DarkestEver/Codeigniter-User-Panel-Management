@@ -238,7 +238,6 @@ class Admin extends BaseController
      */
     function logHistory($userId = NULL)
     {
-            $userId = ($userId == NULL ? $this->session->userdata("userId") : $userId);
             $data["userInfo"] = $this->user_model->getUserInfoById($userId);
             $data['userRecords'] = $this->user_model->logHistory($userId);
             
@@ -249,5 +248,20 @@ class Admin extends BaseController
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
             
             $this->loadViews("logHistory", $this->global, $data, NULL);      
+    }
+
+    function logHistorysingle($userId = NULL)
+    {       
+            $userId = ($userId == NULL ? $this->session->userdata("userId") : $userId);
+            $data["userInfo"] = $this->user_model->getUserInfoById($userId);
+            $data['userRecords'] = $this->user_model->logHistory($userId);
+            
+            $process = 'Tekil Log Görüntüleme';
+            $processFunction = 'Admin/logHistorysingle';
+            $this->logrecord($process,$processFunction);
+
+            $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
+            
+            $this->loadViews("logHistorysingle", $this->global, $data, NULL);      
     }
 }

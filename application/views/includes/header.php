@@ -135,8 +135,8 @@
               </a>
             </li>
             <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i>
+            <a href="<?php echo base_url(); ?>log-history">
+                <i class="fa fa-archive"></i>
                 <span>Log Kayıtları</span>
               </a>
             </li>

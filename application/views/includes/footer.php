@@ -38,7 +38,8 @@
              dom:
                  "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
                  "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-6 col-md-4'i><'col-6 col-md-4'p><'col-6 col-md-4 text-right'B>>",
+                 "<'row'<'col-sm-9'i><'col-sm-3'B>>"+
+                 "<'row'<'col-sm-7 col-centered'p>>",
              lengthMenu: [[10, 15, 25, 50, -1], [10, 15, 25, 50, "Hepsi"]],
  
              //Dil
@@ -67,6 +68,7 @@
                      exportOptions: { orthogonal: 'export' }, text: "PDF",
                  }
              ],
+             "order": [[ 0, "desc" ]],
 		responsive:true
     });
 } );

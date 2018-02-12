@@ -19,7 +19,6 @@ class User_model extends CI_Model
             $this->db->where($likeCriteria);
         }
         $this->db->where('BaseTbl.isDeleted', 0);
-        $this->db->where('BaseTbl.roleId !=', 1);
         $query = $this->db->get();
         
         return $query->num_rows();
@@ -44,7 +43,6 @@ class User_model extends CI_Model
             $this->db->where($likeCriteria);
         }
         $this->db->where('BaseTbl.isDeleted', 0);
-        $this->db->where('BaseTbl.roleId !=', 1);
         $this->db->limit($page, $segment);
         $query = $this->db->get();
         
@@ -60,7 +58,6 @@ class User_model extends CI_Model
     {
         $this->db->select('roleId, role');
         $this->db->from('tbl_roles');
-        $this->db->where('roleId !=', 1);
         $query = $this->db->get();
         
         return $query->result();
@@ -113,7 +110,6 @@ class User_model extends CI_Model
         $this->db->select('userId, name, email, mobile, roleId');
         $this->db->from('tbl_users');
         $this->db->where('isDeleted', 0);
-		$this->db->where('roleId !=', 1);
         $this->db->where('userId', $userId);
         $query = $this->db->get();
         
@@ -200,10 +196,18 @@ class User_model extends CI_Model
         BaseTbl.processFunction,BaseTbl.userRoleId,BaseTbl.userRoleText,BaseTbl.userIp, BaseTbl.userAgent,
         BaseTbl.agentString, BaseTbl.platform,BaseTbl.createdDtm');
         $this->db->from('tbl_log as BaseTbl');
-        $this->db->where('BaseTbl.userId', $userId);
-        $query = $this->db->get();
-        
-        return $query->num_rows();
+
+        if ($userId == NULL)
+        {
+            $query = $this->db->get();
+            return $query->num_rows();
+        }
+        else
+        {
+            $this->db->where('BaseTbl.userId', $userId);
+            $query = $this->db->get();
+            return $query->num_rows();
+        }
     }
 
     /**
@@ -218,12 +222,22 @@ class User_model extends CI_Model
         BaseTbl.processFunction,BaseTbl.userRoleId,BaseTbl.userRoleText,BaseTbl.userIp, BaseTbl.userAgent,
         BaseTbl.agentString, BaseTbl.platform,BaseTbl.createdDtm');        
         $this->db->from('tbl_log as BaseTbl');
-        $this->db->where('BaseTbl.userId', $userId);
-        $this->db->order_by('BaseTbl.id', 'DESC');
-        $query = $this->db->get();
-        
-        $result = $query->result();        
-        return $result;
+
+        if ($userId == NULL)
+        {
+            $this->db->order_by('BaseTbl.id', 'DESC');
+            $query = $this->db->get();
+            $result = $query->result();        
+            return $result;
+        }
+        else
+        {
+            $this->db->where('BaseTbl.userId', $userId);
+            $this->db->order_by('BaseTbl.id', 'DESC');
+            $query = $this->db->get();
+            $result = $query->result();        
+            return $result;
+        }
     }
 
     /**
