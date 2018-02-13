@@ -132,6 +132,22 @@ class Login_model extends CI_Model
 
         return $query->row();
     }
+
+    function gettablemb($tablename,$dbname)
+    {
+        $this->db->select('round(((data_length + index_length)/1024/1024),2) as total_size');
+        $this->db->from('information_schema.tables');
+        $this->db->where('table_name', $tablename);
+        $this->db->where('table_schema', $dbname);
+        $query = $this->db->get($tablename);
+        
+        return $query->row();
+    }
+
+    function clearlogtbl()
+    {
+        $this->db->truncate('tbl_log');
+    }
 }
 
 ?>

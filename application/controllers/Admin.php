@@ -17,6 +17,7 @@ class Admin extends BaseController
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('login_model');
         $this->load->model('user_model');
         $this->datas();
         $isLoggedIn = $this->session->userdata('isLoggedIn');
@@ -238,16 +239,22 @@ class Admin extends BaseController
      */
     function logHistory($userId = NULL)
     {
-            $data["userInfo"] = $this->user_model->getUserInfoById($userId);
+            $data['dbinfo'] = $this->login_model->gettablemb('tbl_log','cias');
+            if(isset($data['dbinfo']->total_size))
+            {
+                if(($data['dbinfo']->total_size)>1000){
+                    $this->backupLogTable();
+                }
+            }
             $data['userRecords'] = $this->user_model->logHistory($userId);
-            
+
             $process = 'Log Görüntüleme';
             $processFunction = 'Admin/logHistory';
             $this->logrecord($process,$processFunction);
 
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
             
-            $this->loadViews("logHistory", $this->global, $data, NULL);      
+            $this->loadViews("logHistory", $this->global, $data, NULL);
     }
 
     function logHistorysingle($userId = NULL)
@@ -263,5 +270,34 @@ class Admin extends BaseController
             $this->global['pageTitle'] = 'BSEU : Kullanıcı Giriş Geçmişi';
             
             $this->loadViews("logHistorysingle", $this->global, $data, NULL);      
+    }
+    
+    function backupLogTable()
+    {
+        $this->load->dbutil();
+        $prefs = array(
+            'tables'=>array('tbl_log')
+        );
+        $backup=$this->dbutil->backup($prefs) ;
+
+        date_default_timezone_set('Europe/Istanbul');
+        $date = date('d-m-Y H-i');
+
+        $filename = './backup/'.$date.'.sql.zip';
+        $this->load->helper('file');
+        write_file($filename,$backup);
+
+        $this->login_model->clearlogtbl();
+
+        if($backup)
+        {
+            $this->session->set_flashdata('success', 'Yedekleme ve Tablo temizleme işlemi başarılı');
+            redirect('log-history');
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Yedekleme ve Tablo temizleme işlemi başarısız');
+            redirect('log-history');
+        }
     }
 }
