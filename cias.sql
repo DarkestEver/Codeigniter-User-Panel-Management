@@ -51,6 +51,8 @@ CREATE TABLE `tbl_task` (
   `id` bigint(20) NOT NULL,
   `title` varchar(1024) NOT NULL,
   `comment`varchar(2048) NOT NULL,
+  `statusId` int NOT NULL,
+  `priorityId` int NOT NULL,
   `permalink` varchar(1024) NOT NULL,
   `endDtm` datetime,
   `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -92,9 +94,52 @@ CREATE TABLE `tbl_roles` (
 --
 
 INSERT INTO `tbl_roles` (`roleId`, `role`) VALUES
-(1, 'System Administrator'),
-(2, 'Manager'),
-(3, 'Employee');
+(1, 'Admin'),
+(2, 'Yönetici'),
+(3, 'Çalışan');
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_tasks_situations`
+--
+
+CREATE TABLE `tbl_tasks_situations` (
+  `statusId` tinyint(4) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_tasks_situations`
+--
+
+INSERT INTO `tbl_tasks_situations` (`statusId`, `status`) VALUES
+(1, 'Açık'),
+(2, 'Tamamlandı');
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_tasks_prioritys`
+--
+
+CREATE TABLE `tbl_tasks_prioritys` (
+  `priorityId` tinyint(4) NOT NULL,
+  `priority` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_roles`
+--
+
+INSERT INTO `tbl_tasks_prioritys` (`priorityId`, `priority`) VALUES
+(1, 'Acil'),
+(2, 'Orta'),
+(3, 'Normal');
 
 -- --------------------------------------------------------
 
@@ -121,9 +166,9 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`userId`, `email`, `password`, `name`, `mobile`, `roleId`, `isDeleted`, `createdBy`, `createdDtm`, `updatedBy`, `updatedDtm`) VALUES
-(1, 'admin@example.com', '$2y$10$6NOKhXKiR2SAgpFF2WpCkuRgYKlSqFJaqM0NgIM3PT1gKHEM5/SM6', 'System Administrator', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2018-01-05 05:56:34'),
-(2, 'manager@example.com', '$2y$10$quODe6vkNma30rcxbAHbYuKYAZQqUaflBgc4YpV9/90ywd.5Koklm', 'Manager', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2018-01-12 07:22:11'),
-(3, 'employee@example.com', '$2y$10$UYsH1G7MkDg1cutOdgl2Q.ZbXjyX.CSjsdgQKvGzAgl60RXZxpB5u', 'Employee', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', 3, '2018-01-04 07:58:28');
+(1, 'admin@ornek.com', '$2y$10$6NOKhXKiR2SAgpFF2WpCkuRgYKlSqFJaqM0NgIM3PT1gKHEM5/SM6', 'Admin', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2018-01-05 05:56:34'),
+(2, 'yonetici@ornek.com', '$2y$10$quODe6vkNma30rcxbAHbYuKYAZQqUaflBgc4YpV9/90ywd.5Koklm', 'Yönetici', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2018-01-12 07:22:11'),
+(3, 'calisan@ornek.com', '$2y$10$UYsH1G7MkDg1cutOdgl2Q.ZbXjyX.CSjsdgQKvGzAgl60RXZxpB5u', 'Çalışan', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', 3, '2018-01-04 07:58:28');
 
 --
 -- Indexes for dumped tables
@@ -142,12 +187,6 @@ ALTER TABLE `tbl_log`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_log`
---
-ALTER TABLE `tbl_task`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tbl_roles`
 --
 ALTER TABLE `tbl_roles`
@@ -158,6 +197,25 @@ ALTER TABLE `tbl_roles`
 --
 ALTER TABLE `tbl_users`
   ADD PRIMARY KEY (`userId`);
+
+
+--
+-- Indexes for table `tbl_task`
+--
+ALTER TABLE `tbl_task`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_tasks_situations`
+--
+ALTER TABLE `tbl_tasks_situations`
+  ADD PRIMARY KEY (`statusId`);
+
+--
+-- Indexes for table `tbl_tasks_prioritys`
+--
+ALTER TABLE `tbl_tasks_prioritys`
+  ADD PRIMARY KEY (`priorityId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -170,10 +228,22 @@ ALTER TABLE `tbl_log`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbl_reset_password`
+-- AUTO_INCREMENT for table `tbl_task`
 --
 ALTER TABLE `tbl_task`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_tasks_situations`
+--
+ALTER TABLE `tbl_tasks_situations`
+  MODIFY `statusId` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_log`
+--
+ALTER TABLE `tbl_tasks_prioritys`
+  MODIFY `priorityId` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_reset_password`

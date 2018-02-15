@@ -192,9 +192,7 @@ class User_model extends CI_Model
     	
     function logHistoryCount($userId)
     {
-        $this->db->select('BaseTbl.id,BaseTbl.userId,BaseTbl.userName,BaseTbl.process,
-        BaseTbl.processFunction,BaseTbl.userRoleId,BaseTbl.userRoleText,BaseTbl.userIp, BaseTbl.userAgent,
-        BaseTbl.agentString, BaseTbl.platform,BaseTbl.createdDtm');
+        $this->db->select('*');
         $this->db->from('tbl_log as BaseTbl');
 
         if ($userId == NULL)
@@ -218,14 +216,12 @@ class User_model extends CI_Model
      */
     function logHistory($userId)
     {
-        $this->db->select('BaseTbl.id,BaseTbl.userId,BaseTbl.userName,BaseTbl.process,
-        BaseTbl.processFunction,BaseTbl.userRoleId,BaseTbl.userRoleText,BaseTbl.userIp, BaseTbl.userAgent,
-        BaseTbl.agentString, BaseTbl.platform,BaseTbl.createdDtm');        
+        $this->db->select('*');        
         $this->db->from('tbl_log as BaseTbl');
 
         if ($userId == NULL)
         {
-            $this->db->order_by('BaseTbl.id', 'DESC');
+            $this->db->order_by('BaseTbl.createdDtm', 'DESC');
             $query = $this->db->get();
             $result = $query->result();        
             return $result;
@@ -233,9 +229,9 @@ class User_model extends CI_Model
         else
         {
             $this->db->where('BaseTbl.userId', $userId);
-            $this->db->order_by('BaseTbl.id', 'DESC');
+            $this->db->order_by('BaseTbl.createdDtm', 'DESC');
             $query = $this->db->get();
-            $result = $query->result();        
+            $result = $query->result();
             return $result;
         }
     }
@@ -254,6 +250,21 @@ class User_model extends CI_Model
         $query = $this->db->get();
         
         return $query->row();
+    }
+
+        /**
+     * This function is used to get tasks
+     */
+    function getTasks()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_task as TaskTbl');
+        $this->db->join('tbl_tasks_situations as Situations','Situations.statusId = TaskTbl.statusId');
+        $this->db->join('tbl_tasks_prioritys as Prioritys','Prioritys.priorityId = TaskTbl.priorityId');
+        $this->db->order_by('TaskTbl.statusId ASC, TaskTbl.priorityId');
+        $query = $this->db->get();
+        $result = $query->result();        
+        return $result;
     }
 
 }

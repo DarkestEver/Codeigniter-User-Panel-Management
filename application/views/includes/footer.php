@@ -68,7 +68,7 @@
                      exportOptions: { orthogonal: 'export' }, text: "PDF",
                  }
              ],
-             "order": [[ 0, "desc" ]],
+             "order": [],
 		responsive:true
     });
 } );

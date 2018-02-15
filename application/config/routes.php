@@ -27,6 +27,7 @@ $route['log-history/(:num)'] = "admin/logHistorysingle/$1";
 $route['log-history/(:num)/(:num)'] = "admin/logHistorysingle/$1/$2";
 $route['backupLogTable'] = "admin/backupLogTable";
 
+$route['tasks'] = "manager/tasks";
 
 $route['loadChangePass'] = "user/loadChangePass";
 $route['changePassword'] = "user/changePassword";

@@ -40,9 +40,9 @@ class BaseController extends CI_Controller {
 			$this->datas();
 		}
 	}
-	
+	// Rol definetion in application/config/constants.php
 	/**
-	 * This function is used to check the access
+	 * This function is used to check the admin access
 	 */
 	function isAdmin() {
 		if ($this->role != ROLE_ADMIN) {
@@ -51,17 +51,29 @@ class BaseController extends CI_Controller {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * This function is used to check the access
+	 * This function is used to check the manager access
 	 */
-	function isTicketter() {
-		if ($this->role != ROLE_ADMIN || $this->role != ROLE_MANAGER) {
-			return true;
-		} else {
+	function isManagerOrAdmin() {
+		if ($this->role == ROLE_ADMIN || $this->role == ROLE_MANAGER) {
 			return false;
+		} else {
+			return true;
 		}
 	}
+
+	/**
+	 * This function is used to view no access view
+	 */
+	public function accesslogincontrol()
+    {
+            $process = 'Erişim Reddi';
+            $processFunction = 'Admin/accesslogincontrol';
+            $this->logrecord($process,$processFunction);
+
+            redirect(noaccess);
+    }
 	
 	/**
 	 * This function is used to logged out user from system

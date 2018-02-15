@@ -33,17 +33,7 @@ class Admin extends BaseController
             }
         }
     }
-
-    public function accesslogincontrol()
-    {
-            $process = 'Erişim Reddi';
-            $processFunction = 'Admin/accesslogincontrol';
-            $this->logrecord($process,$processFunction);
-
-            redirect(noaccess);
-    }
 	
-    
      /**
      * This function is used to load the user list
      */
