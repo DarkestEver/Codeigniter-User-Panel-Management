@@ -114,13 +114,13 @@
             <li class="treeview">
               <a href="<?php echo base_url(); ?>tasks" >
                 <i class="fa fa-ticket"></i>
-                <span>Tüm Görevler</span>
+                <span>Görevler</span>
               </a>
             </li>
             <li class="treeview">
-              <a href="#" >
+              <a href="<?php echo base_url(); ?>addNewTask" >
                 <i class="fa fa-plane"></i>
-                <span>Yeni Görev</span>
+                <span>Görev Ekle</span>
               </a>
             </li>
             <?php
@@ -132,6 +132,12 @@
               <a href="<?php echo base_url(); ?>userListing">
                 <i class="fa fa-users"></i>
                 <span>Kullanıcılar</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="<?php echo base_url(); ?>addNew">
+                <i class="fa fa-plus-circle"></i>
+                <span>Kullanıcı Ekle</span>
               </a>
             </li>
             <li class="treeview">

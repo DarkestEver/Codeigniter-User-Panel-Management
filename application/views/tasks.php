@@ -8,8 +8,10 @@
       </h1>
     </section>
     <section class="content">
-        <div class="row">
             <div class="col-xs-12">
+                    <div class="text-right">
+                    <a class="btn btn-primary" href="<?php echo base_url(); ?>addNewTask"><i class="fa fa-plus"></i> Görev Ekle</a>
+                    </div>
               <div class="box">
                 <div class="box-header">
                     <div class="box-tools">
@@ -46,6 +48,8 @@
                         <th>Açıklama</th>
                         <th>Durumu</th>
                         <th>Öncelik</th>
+                        <th>Oluşturan Kullanıcı</th>
+                        <th>Oluşturan Kullanıcı Yetki</th>
                         <th>Oluşturulma Tarihi</th>
                         <th>Bitiş Tarihi</th>
                         <th>İşlemler</th>
@@ -79,7 +83,8 @@
                         echo 'info'
                         ?>">
                         <?php echo $record->priority ?></div></td>
-
+                        <td><?php echo $record->name ?></td>
+                        <td><?php echo $record->role ?></td>
                         <td><?php echo $record->createdDtm ?></td>
                         <td><?php echo $record->endDtm ?></td>
                         <td>İşlemler</td>

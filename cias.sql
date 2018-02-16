@@ -54,6 +54,7 @@ CREATE TABLE `tbl_task` (
   `statusId` int NOT NULL,
   `priorityId` int NOT NULL,
   `permalink` varchar(1024) NOT NULL,
+  `createdBy` bigint(20) NOT NULL,
   `endDtm` datetime,
   `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -166,9 +167,9 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`userId`, `email`, `password`, `name`, `mobile`, `roleId`, `isDeleted`, `createdBy`, `createdDtm`, `updatedBy`, `updatedDtm`) VALUES
-(1, 'admin@ornek.com', '$2y$10$6NOKhXKiR2SAgpFF2WpCkuRgYKlSqFJaqM0NgIM3PT1gKHEM5/SM6', 'Admin', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2018-01-05 05:56:34'),
-(2, 'yonetici@ornek.com', '$2y$10$quODe6vkNma30rcxbAHbYuKYAZQqUaflBgc4YpV9/90ywd.5Koklm', 'Yönetici', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2018-01-12 07:22:11'),
-(3, 'calisan@ornek.com', '$2y$10$UYsH1G7MkDg1cutOdgl2Q.ZbXjyX.CSjsdgQKvGzAgl60RXZxpB5u', 'Çalışan', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', 3, '2018-01-04 07:58:28');
+(1, 'admin@ornek.com', '$2y$10$HHJtVG1GOf.C1FLLAQuP3OBef.6/4qDdM/6BZsXnTCPtxWau94WIW', 'Süleyman Aydın', '9890098900', 1, 0, 0, '2015-07-01 18:56:49', 1, '2018-01-05 05:56:34'),
+(2, 'yonetici@ornek.com', '$2y$10$HHJtVG1GOf.C1FLLAQuP3OBef.6/4qDdM/6BZsXnTCPtxWau94WIW', 'Hakan Bakan', '9890098900', 2, 0, 1, '2016-12-09 17:49:56', 1, '2018-01-12 07:22:11'),
+(3, 'calisan@ornek.com', '$2y$10$HHJtVG1GOf.C1FLLAQuP3OBef.6/4qDdM/6BZsXnTCPtxWau94WIW', 'Cumhur Oltay', '9890098900', 3, 0, 1, '2016-12-09 17:50:22', 3, '2018-01-04 07:58:28');
 
 --
 -- Indexes for dumped tables

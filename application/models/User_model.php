@@ -252,10 +252,40 @@ class User_model extends CI_Model
         return $query->row();
     }
 
-        /**
+    /**
      * This function is used to get tasks
      */
     function getTasks()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_task as TaskTbl');
+        $this->db->join('tbl_users as Users','Users.userId = TaskTbl.createdBy');
+        $this->db->join('tbl_roles as Roles','Roles.roleId = Users.roleId');
+        $this->db->join('tbl_tasks_situations as Situations','Situations.statusId = TaskTbl.statusId');
+        $this->db->join('tbl_tasks_prioritys as Prioritys','Prioritys.priorityId = TaskTbl.priorityId');
+        $this->db->order_by('TaskTbl.statusId ASC, TaskTbl.priorityId');
+        $query = $this->db->get();
+        $result = $query->result();        
+        return $result;
+    }
+
+    /**
+     * This function is used to get the user roles information
+     * @return array $result : This is result of the query
+     */
+    function getTasksPrioritys()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_tasks_prioritys');
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
+    /**
+     * This function is used to get tasks
+     */
+    function addNewTask()
     {
         $this->db->select('*');
         $this->db->from('tbl_task as TaskTbl');
@@ -265,6 +295,18 @@ class User_model extends CI_Model
         $query = $this->db->get();
         $result = $query->result();        
         return $result;
+    }
+
+    function addNewTasks($taskInfo)
+    {
+        $this->db->trans_start();
+        $this->db->insert('tbl_task', $taskInfo);
+        
+        $insert_id = $this->db->insert_id();
+        
+        $this->db->trans_complete();
+        
+        return $insert_id;
     }
 
 }
