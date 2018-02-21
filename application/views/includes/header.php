@@ -146,6 +146,12 @@
                 <span>Log Kayıtları</span>
               </a>
             </li>
+            <li class="treeview">
+            <a href="<?php echo base_url(); ?>log-history-backup">
+                <i class="fa fa-archive"></i>
+                <span>Log Kayıtları Yedek</span>
+              </a>
+            </li>
             <?php
             }
             ?>

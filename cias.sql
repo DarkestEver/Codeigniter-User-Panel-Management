@@ -43,6 +43,29 @@ CREATE TABLE `tbl_log` (
 
 -- --------------------------------------------------------
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_log_backup`
+--
+
+CREATE TABLE `tbl_log_backup` (
+  `id` bigint(20) NOT NULL,
+  `userId` bigint(20) NOT NULL,
+  `userName` varchar(128) NOT NULL,
+  `process` varchar(1024) NOT NULL,
+  `processFunction` varchar(1024) NOT NULL,
+  `userRoleId` bigint(20) NOT NULL,
+  `userRoleText` varchar(128) NOT NULL,
+  `userIp` varchar(1024) NOT NULL,
+  `userAgent` varchar(128) NOT NULL,
+  `agentString` varchar(1024) NOT NULL,
+  `platform` varchar(128) NOT NULL,
+  `createdDtm` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `tbl_task`
 --
@@ -188,6 +211,12 @@ ALTER TABLE `tbl_log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_log_backup`
+--
+ALTER TABLE `tbl_log_backup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_roles`
 --
 ALTER TABLE `tbl_roles`
@@ -229,6 +258,12 @@ ALTER TABLE `tbl_log`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_log`
+--
+ALTER TABLE `tbl_log_backup`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tbl_task`
 --
 ALTER TABLE `tbl_task`
@@ -241,7 +276,7 @@ ALTER TABLE `tbl_tasks_situations`
   MODIFY `statusId` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tbl_log`
+-- AUTO_INCREMENT for table `tbl_tasks_prioritys`
 --
 ALTER TABLE `tbl_tasks_prioritys`
   MODIFY `priorityId` bigint(20) NOT NULL AUTO_INCREMENT;

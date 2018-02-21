@@ -220,7 +220,7 @@ class Admin extends BaseController
      */
     function logHistory($userId = NULL)
     {
-            $data['dbinfo'] = $this->login_model->gettablemb('tbl_log','cias');
+            $data['dbinfo'] = $this->user_model->gettablemb('tbl_log','cias');
             if(isset($data['dbinfo']->total_size))
             {
                 if(($data['dbinfo']->total_size)>1000){
@@ -268,7 +268,7 @@ class Admin extends BaseController
         $this->load->helper('file');
         write_file($filename,$backup);
 
-        $this->login_model->clearlogtbl();
+        $this->user_model->clearlogtbl();
 
         if($backup)
         {
@@ -281,4 +281,41 @@ class Admin extends BaseController
             redirect('log-history');
         }
     }
+
+    function logHistoryBackup()
+    {
+            $data['dbinfo'] = $this->user_model->gettablemb('tbl_log_backup','cias');
+            if(isset($data['dbinfo']->total_size))
+            {
+            if(($data['dbinfo']->total_size)>1000){
+                $this->backupLogTable();
+            }
+            }
+            $data['userRecords'] = $this->user_model->logHistoryBackup();
+
+            $process = 'Yedek Log Görüntüleme';
+            $processFunction = 'Admin/logHistoryBackup';
+            $this->logrecord($process,$processFunction);
+
+            $this->global['pageTitle'] = 'BSEU : Kullanıcı Yedek Giriş Geçmişi';
+            
+            $this->loadViews("logHistoryBackup", $this->global, $data, NULL);
+    }
+
+    function backupLogTableDelete()
+    {
+        $backup=$this->user_model->clearlogBackuptbl();
+
+        if($backup)
+        {
+            $this->session->set_flashdata('success', 'Tablo temizleme işlemi başarılı');
+            redirect('log-history-backup');
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Tablo temizleme işlemi başarısız');
+            redirect('log-history-backup');
+        }
+    }
+
 }

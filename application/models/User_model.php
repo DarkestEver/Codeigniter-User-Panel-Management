@@ -325,6 +325,43 @@ class User_model extends CI_Model
         $this->db->delete('tbl_task');
         return TRUE;
     }
+
+    function gettablemb($tablename,$dbname)
+    {
+        $this->db->select('round(((data_length + index_length)/1024/1024),2) as total_size');
+        $this->db->from('information_schema.tables');
+        $this->db->where('table_name', $tablename);
+        $this->db->where('table_schema', $dbname);
+        $query = $this->db->get($tablename);
+        
+        return $query->row();
+    }
+
+    function clearlogtbl()
+    {
+        $this->db->truncate('tbl_log');
+    }
+
+    function clearlogBackuptbl()
+    {
+        $this->db->truncate('tbl_log_backup');
+    }
+
+    /**
+     * This function is used to get user log history
+     * @param number $userId : This is user id
+     * @param number $page : This is pagination offset
+     * @return array $result : This is result
+     */
+    function logHistoryBackup()
+    {
+        $this->db->select('*');        
+        $this->db->from('tbl_log_backup as BaseTbl');
+        $this->db->order_by('BaseTbl.createdDtm', 'DESC');
+        $query = $this->db->get();
+        $result = $query->result();        
+        return $result;
+    }
 }
 
   
