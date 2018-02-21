@@ -30,6 +30,9 @@ $route['backupLogTable'] = "admin/backupLogTable";
 $route['tasks'] = "manager/tasks";
 $route['addNewTask'] = "manager/addNewTask";
 $route['addNewTasks'] = "manager/addNewTasks";
+$route['editOldTask/(:num)'] = "manager/editOldTask/$1";
+$route['editTask'] = "manager/editTask";
+$route['deleteTask/(:num)'] = "manager/deleteTask/$1";
 
 $route['loadChangePass'] = "user/loadChangePass";
 $route['changePassword'] = "user/changePassword";

@@ -1,20 +1,21 @@
 <?php
 
-$userId = '';
-$name = '';
-$email = '';
-$mobile = '';
-$roleId = '';
+$id = '';
+$title = '';
+$comment = '';
+$priorityId = '';
+$statusId = '';
 
-if(!empty($userInfo))
+
+if(!empty($taskInfo))
 {
-    foreach ($userInfo as $uf)
+    foreach ($taskInfo as $uf)
     {
-        $userId = $uf->userId;
-        $name = $uf->name;
-        $email = $uf->email;
-        $mobile = $uf->mobile;
-        $roleId = $uf->roleId;
+        $id = $uf->id;
+        $title = $uf->title;
+        $comment = $uf->comment;
+        $priorityId = $uf->priorityId;
+        $statusId = $uf->statusId;
     }
 }
 
@@ -25,8 +26,8 @@ if(!empty($userInfo))
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        <i class="fa fa-users"></i> Kullanıcı Yönetimi
-        <small>Ekle / Düzenle</small>
+        <i class="fa fa-users"></i> Görev Yönetimi
+        <small>Görev Ekle / Düzenle</small>
       </h1>
     </section>
     <section class="content">
@@ -36,74 +37,77 @@ if(!empty($userInfo))
               <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Kullanıcı bilgilerini giriniz</h3>
+                        <h3 class="box-title">Görev bilgilerini giriniz</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    
-                    <form role="form" action="<?php echo base_url() ?>editUser" method="post" id="editUser" role="form">
+                    <?php $this->load->helper("form"); ?>
+                    <form role="form" id="addNewTask" action="<?php echo base_url() ?>editTask" method="post" role="form">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">                                
                                     <div class="form-group">
-                                        <label for="fname">Ad Soyad</label>
-                                        <input type="text" class="form-control" id="fname" placeholder="Full Name" name="fname" value="<?php echo $name; ?>" maxlength="128">
-                                        <input type="hidden" value="<?php echo $userId; ?>" name="userId" id="userId" />    
+                                        <label for="fname">Görev Başlığı</label>
+                                        <input type="hidden" name="taskId" id="taskId" value="<?php echo $id; ?>">
+                                        <input type="text" class="form-control required" value="<?php echo $title; ?>" id="fname" name="fname">
                                     </div>
                                     
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email adresi</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo $email; ?>" maxlength="128">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">Şifre</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Password" name="password" maxlength="20">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="cpassword">Şifre Doğrula</label>
-                                        <input type="password" class="form-control" id="cpassword" placeholder="Şifrenizi Doğrulayın" name="cpassword" maxlength="20">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile">Telefon Numarası</label>
-                                        <input type="text" class="form-control" id="mobile" placeholder="Mobile Number" name="mobile" value="<?php echo $mobile; ?>" maxlength="10">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="role">Yetki</label>
-                                        <select class="form-control" id="role" name="role">
-                                            <option value="0">Yetki Seçiniz</option>
+                                        <label for="role">Öncelik</label>
+                                        <select class="form-control required" id="priority" name="priority">
+                                            <option value="0">Öncelik seçiniz</option>
                                             <?php
-                                            if(!empty($roles))
+                                            if(!empty($tasks_prioritys))
                                             {
-                                                foreach ($roles as $rl)
+                                                foreach ($tasks_prioritys as $rl)
                                                 {
                                                     ?>
-                                                    <option value="<?php echo $rl->roleId; ?>" <?php if($rl->roleId == $roleId) {echo "selected=selected";} ?>><?php echo $rl->role ?></option>
+                                                    <option value="<?php echo $rl->priorityId ?>" <?php if($rl->priorityId == $priorityId) {echo "selected=selected";} ?>><?php echo $rl->priority ?></option>
                                                     <?php
                                                 }
                                             }
                                             ?>
                                         </select>
                                     </div>
-                                </div>    
+                                </div>
                             </div>
+                            <div class="row">
+                            <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="comment">Görev Açıklama</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="4"><?php echo $comment; ?></textarea>
+                                    </div>
+
+                            
+                            <div class="row">
+                            <div class="col-md-12">
+                            <div class="form-group">
+                                        <label for="status">Durum</label>
+                                        <select class="form-control required" id="status" name="status">
+                                            <option value="0">Durum seçiniz</option>
+                                            <?php
+                                            if(!empty($tasks_situations))
+                                            {
+                                                foreach ($tasks_situations as $rl)
+                                                {
+                                                    ?>
+                                                    <option value="<?php echo $rl->statusId ?>" <?php if($rl->statusId == $statusId) {echo "selected=selected";} ?>><?php echo $rl->status ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+
                         </div><!-- /.box-body -->
     
                         <div class="box-footer">
                             <input type="submit" class="btn btn-primary" value="Gönder" />
                             <input type="reset" class="btn btn-default" value="Sıfırla" />
+                        </div>
+                        </div>
                         </div>
                     </form>
                 </div>
@@ -139,6 +143,5 @@ if(!empty($userInfo))
             </div>
         </div>    
     </section>
+    
 </div>
-
-<script src="<?php echo base_url(); ?>assets/js/editUser.js" type="text/javascript"></script>

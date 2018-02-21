@@ -269,10 +269,6 @@ class User_model extends CI_Model
         return $result;
     }
 
-    /**
-     * This function is used to get the user roles information
-     * @return array $result : This is result of the query
-     */
     function getTasksPrioritys()
     {
         $this->db->select('*');
@@ -282,19 +278,13 @@ class User_model extends CI_Model
         return $query->result();
     }
 
-    /**
-     * This function is used to get tasks
-     */
-    function addNewTask()
+    function getTasksSituations()
     {
         $this->db->select('*');
-        $this->db->from('tbl_task as TaskTbl');
-        $this->db->join('tbl_tasks_situations as Situations','Situations.statusId = TaskTbl.statusId');
-        $this->db->join('tbl_tasks_prioritys as Prioritys','Prioritys.priorityId = TaskTbl.priorityId');
-        $this->db->order_by('TaskTbl.statusId ASC, TaskTbl.priorityId');
+        $this->db->from('tbl_tasks_situations');
         $query = $this->db->get();
-        $result = $query->result();        
-        return $result;
+        
+        return $query->result();
     }
 
     function addNewTasks($taskInfo)
@@ -309,6 +299,32 @@ class User_model extends CI_Model
         return $insert_id;
     }
 
+    function getTaskInfo($taskId)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_task');
+        $this->db->join('tbl_tasks_situations as Situations','Situations.statusId = tbl_task.statusId');
+        $this->db->join('tbl_tasks_prioritys as Prioritys','Prioritys.priorityId = tbl_task.priorityId');
+        $this->db->where('id', $taskId);
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+    
+    function editTask($taskInfo, $taskId)
+    {
+        $this->db->where('id', $taskId);
+        $this->db->update('tbl_task', $taskInfo);
+        
+        return $this->db->affected_rows();
+    }
+    
+    function deleteTask($taskId)
+    {
+        $this->db->where('id', $taskId);
+        $this->db->delete('tbl_task');
+        return TRUE;
+    }
 }
 
   

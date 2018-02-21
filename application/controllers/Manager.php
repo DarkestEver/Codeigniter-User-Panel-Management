@@ -104,5 +104,86 @@ class Manager extends BaseController
             }
         }
 
+    function editOldTask($taskId = NULL)
+    {
+            if($taskId == null)
+            {
+                redirect('tasks');
+            }
+            
+            $data['taskInfo'] = $this->user_model->getTaskInfo($taskId);
+            $data['tasks_prioritys'] = $this->user_model->getTasksPrioritys();
+            $data['tasks_situations'] = $this->user_model->getTasksSituations();
+            
+            $this->global['pageTitle'] = 'BSEU : Görev Düzenle';
+            
+            $this->loadViews("editOldTask", $this->global, $data, NULL);
+    }
+
+    function editTask()
+    {            
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('fname','Görev Başlığı','required');
+        $this->form_validation->set_rules('priority','Öncelik','required');
+        
+        $taskId = $this->input->post('taskId');
+
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->editOldTask($taskId);
+        }
+        else
+        {
+            $taskId = $this->input->post('taskId');
+            $title = $this->input->post('fname');
+            $comment = $this->input->post('comment');
+            $priorityId = $this->input->post('priority');
+            $statusId = $this->input->post('status');
+            $permalink = sef($title);
+            
+            $taskInfo = array('title'=>$title, 'comment'=>$comment, 'priorityId'=>$priorityId, 'statusId'=> $statusId,
+                                'permalink'=>$permalink);
+                                
+            $result = $this->user_model->editTask($taskInfo,$taskId);
+            
+            if($result > 0)
+            {
+                $process = 'Görev Düzenleme';
+                $processFunction = 'Manager/editTask';
+                $this->logrecord($process,$processFunction);
+                $this->session->set_flashdata('success', 'Görev düzenleme başarılı');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Görev düzenleme başarısız');
+            }
+            redirect('tasks');
+
+            }
+    }
+
+    function deleteTask($taskId = NULL)
+    {
+        if($taskId == null)
+            {
+                redirect('tasks');
+            }
+
+            $result = $this->user_model->deleteTask($taskId);
+            
+            if ($result == TRUE) {
+                 $process = 'Görev Silme';
+                 $processFunction = 'Manager/deleteTask';
+                 $this->logrecord($process,$processFunction);
+
+                 $this->session->set_flashdata('success', 'Görev silme başarılı');
+                }
+            else
+            {
+                $this->session->set_flashdata('error', 'Görev silme başarısız');
+            }
+            redirect('tasks');
+    }
 
 }
