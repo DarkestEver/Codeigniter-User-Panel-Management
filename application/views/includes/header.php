@@ -147,11 +147,27 @@
               </a>
             </li>
             <li class="treeview">
+            <a href="<?php echo base_url(); ?>log-history-upload">
+                <i class="fa fa-upload"></i>
+                <span>Yedek Yükle</span>
+              </a>
+            </li>
+            <li class="treeview">
             <a href="<?php echo base_url(); ?>log-history-backup">
                 <i class="fa fa-archive"></i>
                 <span>Log Kayıtları Yedek</span>
               </a>
             </li>
+            <?php
+            }
+            if($role == ROLE_EMPLOYEE)
+            {
+            ?>
+            <li class="treeview">
+              <a href="<?php echo base_url(); ?>etasks" >
+                <i class="fa fa-ticket"></i>
+                <span>Görevler</span>
+              </a>
             <?php
             }
             ?>

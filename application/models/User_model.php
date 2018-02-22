@@ -340,11 +340,13 @@ class User_model extends CI_Model
     function clearlogtbl()
     {
         $this->db->truncate('tbl_log');
+        return TRUE;
     }
 
     function clearlogBackuptbl()
     {
         $this->db->truncate('tbl_log_backup');
+        return TRUE;
     }
 
     /**

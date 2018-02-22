@@ -53,6 +53,7 @@
                         <th>Oluşturulma Tarihi</th>
                         <th>Bitiş Tarihi</th>
                         <th>İşlemler</th>
+                        <th>Görev Bitir</th>
                       </tr>
                     </thead>
                       <tbody>
@@ -88,9 +89,11 @@
                         <td><?php echo $record->createdDtm ?></td>
                         <td><?php echo $record->endDtm ?></td>
                         <td class="text-center">
-                          <a class="btn btn-sm btn-primary" href="<?= base_url().'endTask/'.$record->id; ?>" title="Görevi Bitir"><i class="fa fa-hand-o-right"></i></a> | 
                           <a class="btn btn-sm btn-info" href="<?php echo base_url().'editOldTask/'.$record->id; ?>" title="Düzenle"><i class="fa fa-pencil"></i></a>
                           <a class="btn btn-sm btn-danger deleteUser" href="<?php echo base_url().'deleteTask/'.$record->id; ?>" data-userid="<?php echo $record->id; ?>" title="Sil"><i class="fa fa-trash"></i></a>
+                        </td>
+                        <td class="text-center">
+                          <a class="btn btn-sm btn-primary" href="<?= base_url().'endTask/'.$record->id; ?>" title="Görevi Bitir"><i class="fa fa-check-circle"></i></a>
                         </td>
                       </tr>
                       <?php

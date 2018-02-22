@@ -264,7 +264,7 @@ class Admin extends BaseController
         date_default_timezone_set('Europe/Istanbul');
         $date = date('d-m-Y H-i');
 
-        $filename = './backup/'.$date.'.sql.zip';
+        $filename = './backup/'.$date.'.sql.gz';
         $this->load->helper('file');
         write_file($filename,$backup);
 
@@ -318,4 +318,104 @@ class Admin extends BaseController
         }
     }
 
+    function logHistoryUpload()
+    {       
+            $this->load->helper('directory');
+            $map = directory_map('./backup/', FALSE, TRUE);
+        
+            $data['backups']=$map;
+
+            $process = 'Yedek Log Yükleme';
+            $processFunction = 'Admin/logHistoryUpload';
+            $this->logrecord($process,$processFunction);
+
+            $this->global['pageTitle'] = 'BSEU : Kullanıcı Log Yükleme';
+            
+            $this->loadViews("logHistoryUpload", $this->global, $data, NULL);      
+    }
+
+    function logHistoryUploadFile()
+    {
+        $optioninput = $this->input->post('optionfilebackup');
+
+        if ($optioninput == '0' && $_FILES['filebackup']['name'] != '')
+        {
+            $config = array(
+            'upload_path' => "./uploads/",
+            'allowed_types' => "gz|sql|gzip",
+            'overwrite' => TRUE,
+            'max_size' => "20048000", // Can be set to particular file size , here it is 20 MB(20048 Kb)
+            );
+
+            $this->load->library('upload', $config);
+            $upload= $this->upload->do_upload('filebackup');
+                $data = $this->upload->data();
+                $filepath = $data['full_path'];
+                $path_parts = pathinfo($filepath);
+                $filetype = $path_parts['extension'];
+                if ($filetype == 'gz')
+                {
+                    // Read entire gz file
+                    $lines = gzfile($filepath);
+                    $lines = str_replace('tbl_log','tbl_log_backup', $lines);
+                }
+                else
+                {
+                    // Read in entire file
+                    $lines = file($filepath);
+                    $lines = str_replace('tbl_log','tbl_log_backup', $lines);
+                }
+        }
+
+        else if ($optioninput != '0' && $_FILES['filebackup']['name'] == '')
+        {
+            $filepath = './backup/'.$optioninput;
+            $path_parts = pathinfo($filepath);
+            $filetype = $path_parts['extension'];
+            if ($filetype == 'gz')
+            {
+                // Read entire gz file
+                $lines = gzfile($filepath);
+                $lines = str_replace('tbl_log','tbl_log_backup', $lines);
+            }
+            else
+            {
+                // Read in entire file
+                $lines = file($filepath);
+                $lines = str_replace('tbl_log','tbl_log_backup', $lines);
+            }
+        }
+                // Set line to collect lines that wrap
+                $templine = '';
+                
+                // Loop through each line
+                foreach ($lines as $line)
+                {
+                    // Skip it if it's a comment
+                    if (substr($line, 0, 2) == '--' || $line == '')
+                    continue;
+                    // Add this line to the current templine we are creating
+                    $templine .= $line;
+
+                    // If it has a semicolon at the end, it's the end of the query so can process this templine
+                    if (substr(trim($line), -1, 1) == ';')
+                    {
+                        // Perform the query
+                        $this->db->query($templine);
+
+                        // Reset temp variable to empty
+                        $templine = '';
+                    }
+                }
+            if (empty($lines) || !isset($lines))
+            {
+                $this->session->set_flashdata('error', 'Yedek yükleme işlemi başarısız');
+                redirect('log-history-upload');
+            }
+            else
+            {
+                $this->session->set_flashdata('success', 'Yedek yükleme işlemi başarılı');
+                redirect('log-history-upload');
+            }
+    }
 }
