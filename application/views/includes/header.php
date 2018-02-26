@@ -113,13 +113,13 @@
             ?>
             <li class="treeview">
               <a href="<?php echo base_url(); ?>tasks" >
-                <i class="fa fa-ticket"></i>
+                <i class="fa fa-tasks"></i>
                 <span>Görevler</span>
               </a>
             </li>
             <li class="treeview">
               <a href="<?php echo base_url(); ?>addNewTask" >
-                <i class="fa fa-plane"></i>
+                <i class="fa fa-plus-circle"></i>
                 <span>Görev Ekle</span>
               </a>
             </li>
