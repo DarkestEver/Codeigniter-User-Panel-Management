@@ -364,6 +364,14 @@ class User_model extends CI_Model
         $result = $query->result();        
         return $result;
     }
+
+    function endTask($taskId, $taskInfo)
+    {
+        $this->db->where('id', $taskId);
+        $this->db->update('tbl_task', $taskInfo);
+        
+        return $this->db->affected_rows();
+    }
 }
 
   
