@@ -372,6 +372,39 @@ class User_model extends CI_Model
         
         return $this->db->affected_rows();
     }
+
+    function tasksCount()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_task as BaseTbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    function finishedTasksCount()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_task as BaseTbl');
+        $this->db->where('BaseTbl.statusId', 2);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    function logsCount()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_log as BaseTbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    function usersCount()
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_users as BaseTbl');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
 }
 
   

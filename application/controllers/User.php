@@ -27,8 +27,13 @@ class User extends BaseController
     public function index()
     {
         $this->global['pageTitle'] = 'BSEU : Anasayfa';
+
+        $data['tasksCount'] = $this->user_model->tasksCount();
+        $data['finishedTasksCount'] = $this->user_model->finishedTasksCount();
+        $data['logsCount'] = $this->user_model->logsCount();
+        $data['usersCount'] = $this->user_model->usersCount();
         
-        $this->loadViews("dashboard", $this->global, NULL , NULL);
+        $this->loadViews("dashboard", $this->global, $data , NULL);
     }
 
     /**
@@ -162,6 +167,8 @@ class User extends BaseController
             
             $this->loadViews("etasks", $this->global, $data, NULL);
     }
+
+
 }
 
 ?>

@@ -60,7 +60,7 @@
                   <i class="fa fa-history"></i>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header"> Son Giriş : <i class="fa fa-clock-o"></i> <?= empty($last_login) ? "First Time Login" : $last_login; ?></li>
+                  <li class="header"> Son Giriş : <i class="fa fa-clock-o"></i> <?= empty($last_login) ? "İlk Giriş" : $last_login; ?></li>
                 </ul>
               </li>
               <!-- User Account: style can be found in dropdown.less -->
