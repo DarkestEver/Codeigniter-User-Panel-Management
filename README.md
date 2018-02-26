@@ -112,10 +112,8 @@ Manager: yonetici@ornek.com / 123456
 Employee : calisan@ornek.com / 123456
 
 ### How to contribute?
-You can reach me by commenting on this post or send message on the discord (pars11).If you want to make this application better, you can make a Pull Request.
+You can reach me send message on the discord (pars11) or email (sametay153@gmail.com).If you want to make this application better, you can make a Pull Request.
 
 [Github](https://github.com/pars11/Codeigniter-User-Panel-Management)
 
 [Thanks to kishor10d for first commit](https://github.com/kishor10d/Admin-Panel-User-Management-using-CodeIgniter)
-
-<br /><hr/><em>Posted on <a href="https://utopian.io/utopian-io/@pars11/user-management-panel-task-control-or-codeigniter-or-php-or">Utopian.io -  Rewarding Open Source Contributors</a></em><hr/>
