@@ -1,3 +1,5 @@
+## Codeigniter User Panel Management / BSEU
+
 ### What is the project about?
 
 BSEU is a management panel with role based application, using CodeIgniter(PHP MVC Framework).
