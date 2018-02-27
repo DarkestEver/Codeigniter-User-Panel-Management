@@ -14,6 +14,7 @@ class BaseController extends CI_Controller {
 	protected $roleText = '';
 	protected $global = array ();
 	protected $lastLogin = '';
+	protected $status = '';
 	
 	/**
 	 * Takes mixed data and optionally a status code, then creates the response
@@ -60,6 +61,17 @@ class BaseController extends CI_Controller {
 			return false;
 		} else {
 			return true;
+		}
+	}
+
+	function getUserStatus() {
+		$this->datas();
+		$status = $this->user_model->getUserStatus($this->vendorId);
+		if($status->status == 0)
+		{
+			return true;
+		}else {
+			return false;
 		}
 	}
 
@@ -155,11 +167,15 @@ class BaseController extends CI_Controller {
 		$this->name = $this->session->userdata ( 'name' );
 		$this->roleText = $this->session->userdata ( 'roleText' );
 		$this->lastLogin = $this->session->userdata ( 'lastLogin' );
+		$this->status = $this->session->userdata ( 'status' );
+		
 		
 		$this->global ['name'] = $this->name;
 		$this->global ['role'] = $this->role;
 		$this->global ['role_text'] = $this->roleText;
 		$this->global ['last_login'] = $this->lastLogin;
+		$this->global ['status'] = $this->status;
+		
 	}
 
 	function logrecord($process,$processFunction){

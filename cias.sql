@@ -179,6 +179,7 @@ CREATE TABLE `tbl_users` (
   `mobile` varchar(20) DEFAULT NULL,
   `roleId` tinyint(4) NOT NULL,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `createdBy` int(11) NOT NULL,
   `createdDtm` datetime NOT NULL,
   `updatedBy` int(11) DEFAULT NULL,

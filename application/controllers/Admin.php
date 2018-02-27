@@ -164,12 +164,12 @@ class Admin extends BaseController
                 if(empty($password))
                 {
                     $userInfo = array('email'=>$email, 'roleId'=>$roleId, 'name'=>$name,
-                                    'mobile'=>$mobile, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+                                    'mobile'=>$mobile, 'status'=>0, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 else
                 {
                     $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,
-                        'name'=>ucwords($name), 'mobile'=>$mobile, 'updatedBy'=>$this->vendorId, 
+                        'name'=>ucwords($name), 'mobile'=>$mobile,'status'=>0, 'updatedBy'=>$this->vendorId, 
                         'updatedDtm'=>date('Y-m-d H:i:s'));
                 }
                 

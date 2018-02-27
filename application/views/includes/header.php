@@ -165,7 +165,7 @@
             ?>
             <li class="treeview">
               <a href="<?php echo base_url(); ?>etasks" >
-                <i class="fa fa-ticket"></i>
+                <i class="fa fa-tasks"></i>
                 <span>Görevler</span>
               </a>
             <?php

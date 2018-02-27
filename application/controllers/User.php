@@ -32,7 +32,13 @@ class User extends BaseController
         $data['finishedTasksCount'] = $this->user_model->finishedTasksCount();
         $data['logsCount'] = $this->user_model->logsCount();
         $data['usersCount'] = $this->user_model->usersCount();
-        
+
+        if ($this->getUserStatus() == TRUE)
+        {
+            $this->session->set_flashdata('error', 'Lütfen güvenliğiniz için öncelikle şifrenizi değiştiriniz.');
+            redirect('loadChangePass');
+        }
+
         $this->loadViews("dashboard", $this->global, $data , NULL);
     }
 
@@ -94,7 +100,7 @@ class User extends BaseController
             }
             else
             {
-                $usersData = array('password'=>getHashedPassword($newPassword), 'updatedBy'=>$this->vendorId,
+                $usersData = array('password'=>getHashedPassword($newPassword),'status'=>1, 'updatedBy'=>$this->vendorId,
                                 'updatedDtm'=>date('Y-m-d H:i:s'));
                 
                 $result = $this->user_model->changePassword($this->vendorId, $usersData);

@@ -405,6 +405,16 @@ class User_model extends CI_Model
         $query = $this->db->get();
         return $query->num_rows();
     }
+
+    function getUserStatus($userId)
+    {
+        $this->db->select('BaseTbl.status');
+        $this->db->where('BaseTbl.userId', $userId);
+        $this->db->limit(1);
+        $query = $this->db->get('tbl_users as BaseTbl');
+
+        return $query->row();
+    }
 }
 
   

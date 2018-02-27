@@ -107,6 +107,7 @@ class Login extends BaseController
                                             'roleText'=>$res->role,
                                             'name'=>$res->name,
                                             'lastLogin'=> $lastLogin->createdDtm,
+                                            'status'=> $res->status,
                                             'isLoggedIn' => TRUE
                                     );
 
