@@ -12,7 +12,7 @@ $route['loginMe'] = 'login/loginMe';
 $route['dashboard'] = 'user';
 $route['logout'] = 'user/logout';
 
-
+/*********** ADMIN CONTROLLER ROUTES *******************/
 $route['noaccess'] = 'login/noaccess';
 $route['userListing'] = 'admin/userListing';
 $route['userListing/(:num)'] = "admin/userListing/$1";
@@ -31,6 +31,7 @@ $route['backupLogTableDelete'] = "admin/backupLogTableDelete";
 $route['log-history-upload'] = "admin/logHistoryUpload";
 $route['logHistoryUploadFile'] = "admin/logHistoryUploadFile";
 
+/*********** MANAGER CONTROLLER ROUTES *******************/
 $route['tasks'] = "manager/tasks";
 $route['addNewTask'] = "manager/addNewTask";
 $route['addNewTasks'] = "manager/addNewTasks";
@@ -38,6 +39,7 @@ $route['editOldTask/(:num)'] = "manager/editOldTask/$1";
 $route['editTask'] = "manager/editTask";
 $route['deleteTask/(:num)'] = "manager/deleteTask/$1";
 
+/*********** USER CONTROLLER ROUTES *******************/
 $route['loadChangePass'] = "user/loadChangePass";
 $route['changePassword'] = "user/changePassword";
 $route['pageNotFound'] = "user/pageNotFound";
@@ -45,6 +47,7 @@ $route['checkEmailExists'] = "user/checkEmailExists";
 $route['endTask/(:num)'] = "user/endTask/$1";
 $route['etasks'] = "user/etasks";
 
+/*********** LOGIN CONTROLLER ROUTES *******************/
 $route['forgotPassword'] = "login/forgotPassword";
 $route['resetPasswordUser'] = "login/resetPasswordUser";
 $route['resetPasswordConfirmUser'] = "login/resetPasswordConfirmUser";

@@ -3,10 +3,10 @@
 require APPPATH . '/libraries/BaseController.php';
 /**
  * Class : Login (LoginController)
- * Login class to control to authenticate user credentials and starts user's session.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
+ * Admin class to control to authenticate admin credentials and include admin functions.
+ * @author : Samet Aydın / sametay153@gmail.com
+ * @version : 1.0
+ * @since : 27.02.2018
  */
 class Login extends BaseController
 {
@@ -27,6 +27,9 @@ class Login extends BaseController
         $this->isLoggedIn();
     }
 
+    /**
+     * This function is used to open error /404 not found page
+     */
     public function error()
     {
         $isLoggedIn = $this->session->userdata('isLoggedIn');
@@ -44,6 +47,9 @@ class Login extends BaseController
         }
     }
 
+    /**
+     * This function is used to access denied page
+     */
     public function noaccess() {
         
         $this->global['pageTitle'] = 'BSEU : Erişim Reddedildi';

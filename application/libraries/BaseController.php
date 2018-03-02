@@ -1,13 +1,12 @@
 <?php defined ( 'BASEPATH' ) or exit ( 'No direct script access allowed' ); 
-
 /**
- * Class : BaseController
- * Base Class to control over all the classes
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
+ * Class : BaseController (BaseController)
+ * @author : Samet Aydın / sametay153@gmail.com
+ * @version : 1.0
+ * @since : 27.02.2018
  */
 class BaseController extends CI_Controller {
+	// User session variables
 	protected $role = '';
 	protected $vendorId = '';
 	protected $name = '';
@@ -41,9 +40,9 @@ class BaseController extends CI_Controller {
 			$this->datas();
 		}
 	}
-	// Rol definetion in application/config/constants.php
 	/**
 	 * This function is used to check the admin access
+	 * Rol definetions in application/config/constants.php
 	 */
 	function isAdmin() {
 		if ($this->role != ROLE_ADMIN) {
@@ -55,6 +54,7 @@ class BaseController extends CI_Controller {
 
 	/**
 	 * This function is used to check the manager access
+	 * Rol definetions in application/config/constants.php
 	 */
 	function isManagerOrAdmin() {
 		if ($this->role == ROLE_ADMIN || $this->role == ROLE_MANAGER) {
@@ -64,6 +64,9 @@ class BaseController extends CI_Controller {
 		}
 	}
 
+	/**
+	 * This function is used to get the user's status from the user table
+	 */
 	function getUserStatus() {
 		$this->datas();
 		$status = $this->user_model->getUserStatus($this->vendorId);
@@ -160,6 +163,9 @@ class BaseController extends CI_Controller {
 		);
 	}
 
+	/**
+	 * This function used to load user sessions
+	 */
 	function datas()
 	{
 		$this->role = $this->session->userdata ( 'role' );
@@ -177,7 +183,10 @@ class BaseController extends CI_Controller {
 		$this->global ['status'] = $this->status;
 		
 	}
-
+	
+	/**
+	 * This function insert into log to the log table
+	 */
 	function logrecord($process,$processFunction){
 		$this->datas();
 		$logInfo = array("userId"=>$this->vendorId,
@@ -191,7 +200,6 @@ class BaseController extends CI_Controller {
 		"agentString"=>$this->agent->agent_string(),
 		"platform"=>$this->agent->platform()
 		);
-		   
 		
 		$this->load->model('login_model');
 		$this->login_model->loginsert($logInfo);

@@ -5,9 +5,9 @@ require APPPATH . '/libraries/BaseController.php';
 /**
  * Class : User (UserController)
  * User Class to control all user related operations.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
+ * @author : Samet Aydın / sametay153@gmail.com
+ * @version : 1.0
+ * @since : 27.02.2018
  */
 class User extends BaseController
 {
@@ -123,7 +123,7 @@ class User extends BaseController
     }
 
     /**
-     * Page not found : error 404
+     * This function is used to open 404 view
      */
     function pageNotFound()
     {
@@ -132,6 +132,9 @@ class User extends BaseController
         $this->loadViews("404", $this->global, NULL, NULL);
     }
 
+    /**
+     * This function is used to finish tasks.
+     */
     function endTask($taskId)
     {
             $taskInfo = array('statusId'=>2,'endDtm'=>date('Y-m-d H:i:s'));
@@ -161,6 +164,9 @@ class User extends BaseController
             }
     }
 
+    /**
+     * This function is used to open the tasks page for users (no edit/delete etc)
+     */
     function etasks()
     {
             $data['taskRecords'] = $this->user_model->getTasks();

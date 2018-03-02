@@ -1,9 +1,9 @@
-<div class="content-wrapper">    
+<div class="content-wrapper">
     <section class="content-header">
-      <h1>
-        Erişim Reddedildi
-        <small>Bu sayfaya giriş yetkiniz yok.</small>
-      </h1>
+        <h1>
+            Erişim Reddedildi
+            <small>Bu sayfaya giriş yetkiniz yok.</small>
+        </h1>
     </section>
     <section class="content">
         <div class="row">

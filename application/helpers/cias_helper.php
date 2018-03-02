@@ -149,8 +149,13 @@ if(!function_exists('setFlashData'))
     }
 }
 
-function sef($str, $options = array())
+/**
+ * This method used to convert headlines to seo friendly links
+ */
+if(!function_exists('sef'))
 {
+    function sef($str, $options = array())
+    {
     $str = mb_convert_encoding((string)$str, 'UTF-8', mb_list_encodings());
     $defaults = array(
         'delimiter' => '-',
@@ -227,6 +232,7 @@ function sef($str, $options = array())
     $str = mb_substr($str, 0, ($options['limit'] ? $options['limit'] : mb_strlen($str, 'UTF-8')), 'UTF-8');
     $str = trim($str, $options['delimiter']);
     return $options['lowercase'] ? mb_strtolower($str, 'UTF-8') : $str;
+    }   
 }
 
 ?>

@@ -211,7 +211,6 @@ class User_model extends CI_Model
     /**
      * This function is used to get user log history
      * @param number $userId : This is user id
-     * @param number $page : This is pagination offset
      * @return array $result : This is result
      */
     function logHistory($userId)
@@ -269,6 +268,9 @@ class User_model extends CI_Model
         return $result;
     }
 
+    /**
+     * This function is used to get task prioritys
+     */
     function getTasksPrioritys()
     {
         $this->db->select('*');
@@ -278,6 +280,9 @@ class User_model extends CI_Model
         return $query->result();
     }
 
+    /**
+     * This function is used to get task situations
+     */
     function getTasksSituations()
     {
         $this->db->select('*');
@@ -286,7 +291,10 @@ class User_model extends CI_Model
         
         return $query->result();
     }
-
+    
+    /**
+     * This function is used to add a new task
+     */
     function addNewTasks($taskInfo)
     {
         $this->db->trans_start();
@@ -299,6 +307,11 @@ class User_model extends CI_Model
         return $insert_id;
     }
 
+    /**
+     * This function used to get task information by id
+     * @param number $taskId : This is task id
+     * @return array $result : This is task information
+     */
     function getTaskInfo($taskId)
     {
         $this->db->select('*');
@@ -311,6 +324,9 @@ class User_model extends CI_Model
         return $query->result();
     }
     
+    /**
+     * This function is used to edit tasks
+     */
     function editTask($taskInfo, $taskId)
     {
         $this->db->where('id', $taskId);
@@ -319,6 +335,9 @@ class User_model extends CI_Model
         return $this->db->affected_rows();
     }
     
+    /**
+     * This function is used to delete tasks
+     */
     function deleteTask($taskId)
     {
         $this->db->where('id', $taskId);
@@ -326,6 +345,12 @@ class User_model extends CI_Model
         return TRUE;
     }
 
+    /**
+     * This function is used to return the size of the table
+     * @param string $tablename : This is table name
+     * @param string $dbname : This is database name
+     * @return array $return : Table size in mb
+     */
     function gettablemb($tablename,$dbname)
     {
         $this->db->select('round(((data_length + index_length)/1024/1024),2) as total_size');
@@ -337,12 +362,18 @@ class User_model extends CI_Model
         return $query->row();
     }
 
+    /**
+     * This function is used to delete tbl_log table records
+     */
     function clearlogtbl()
     {
         $this->db->truncate('tbl_log');
         return TRUE;
     }
 
+    /**
+     * This function is used to delete tbl_log_backup table records
+     */
     function clearlogBackuptbl()
     {
         $this->db->truncate('tbl_log_backup');
@@ -351,8 +382,6 @@ class User_model extends CI_Model
 
     /**
      * This function is used to get user log history
-     * @param number $userId : This is user id
-     * @param number $page : This is pagination offset
      * @return array $result : This is result
      */
     function logHistoryBackup()
@@ -365,6 +394,9 @@ class User_model extends CI_Model
         return $result;
     }
 
+    /**
+     * This function is used to complete tasks
+     */
     function endTask($taskId, $taskInfo)
     {
         $this->db->where('id', $taskId);
@@ -373,6 +405,10 @@ class User_model extends CI_Model
         return $this->db->affected_rows();
     }
 
+    /**
+     * This function is used to get the tasks count
+     * @return array $result : This is result
+     */
     function tasksCount()
     {
         $this->db->select('*');
@@ -381,6 +417,10 @@ class User_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * This function is used to get the finished tasks count
+     * @return array $result : This is result
+     */
     function finishedTasksCount()
     {
         $this->db->select('*');
@@ -390,6 +430,10 @@ class User_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * This function is used to get the logs count
+     * @return array $result : This is result
+     */
     function logsCount()
     {
         $this->db->select('*');
@@ -398,6 +442,10 @@ class User_model extends CI_Model
         return $query->num_rows();
     }
 
+    /**
+     * This function is used to get the users count
+     * @return array $result : This is result
+     */
     function usersCount()
     {
         $this->db->select('*');

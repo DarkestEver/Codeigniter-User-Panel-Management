@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/*
+|--------------------------------------------------------------------------
+| Database Settings
+|--------------------------------------------------------------------------
+|
+*/
+
 $active_group = 'default';
 $query_builder = TRUE;
 

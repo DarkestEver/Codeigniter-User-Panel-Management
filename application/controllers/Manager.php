@@ -2,11 +2,11 @@
 
 require APPPATH . '/libraries/BaseController.php';
 /**
- * Class : Login (LoginController)
- * Login class to control to authenticate user credentials and starts user's session.
- * @author : Kishor Mali
- * @version : 1.1
- * @since : 15 November 2016
+ * Class : Manager (ManagerController)
+ * Manager class to control to authenticate manager credentials and include manager functions.
+ * @author : Samet Aydın / sametay153@gmail.com
+ * @version : 1.0
+ * @since : 27.02.2018
  */
 class Manager extends BaseController
 {
@@ -17,7 +17,9 @@ class Manager extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
+        // Datas -> libraries ->BaseController / This function used load user sessions
         $this->datas();
+        // isLoggedIn / Login control function /  This function used login control
         $isLoggedIn = $this->session->userdata('isLoggedIn');
         if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
         {
@@ -25,6 +27,7 @@ class Manager extends BaseController
         }
         else
         {
+            // isManagerOrAdmin / Admin or manager role control function / This function used admin or manager role control
             if($this->isManagerOrAdmin() == TRUE)
             {
                 $this->accesslogincontrol();
@@ -104,6 +107,9 @@ class Manager extends BaseController
             }
         }
 
+    /**
+     * This function is used to open edit tasks view
+     */
     function editOldTask($taskId = NULL)
     {
             if($taskId == null)
@@ -120,6 +126,9 @@ class Manager extends BaseController
             $this->loadViews("editOldTask", $this->global, $data, NULL);
     }
 
+    /**
+     * This function is used to edit tasks
+     */
     function editTask()
     {            
         $this->load->library('form_validation');
@@ -163,6 +172,9 @@ class Manager extends BaseController
             }
     }
 
+    /**
+     * This function is used to delete tasks
+     */
     function deleteTask($taskId = NULL)
     {
         if($taskId == null)
