@@ -59,9 +59,94 @@ class User extends BaseController
         if(empty($result)){ echo("true"); }
         else { echo("false"); }
     }
+
+    /**
+     * This function is used to load edit user view
+     */
+    function loadUserEdit()
+    {
+        $this->global['pageTitle'] = 'BSEU : Hesap Ayarları';
+        
+        $data['userInfo'] = $this->user_model->getUserInfo($this->vendorId);
+
+        $this->loadViews("userEdit", $this->global, $data, NULL);
+    }
+
+    /**
+     * This function is used to update the of the user info
+     */
+    function updateUser()
+    {
+        $this->load->library('form_validation');
+            
+        $userId = $this->input->post('userId');
+        
+        $this->form_validation->set_rules('fname','Full Name','trim|required|max_length[128]');
+        $this->form_validation->set_rules('email','Email','trim|required|valid_email|max_length[128]');
+        $this->form_validation->set_rules('oldpassword','Old password','max_length[20]');
+        $this->form_validation->set_rules('cpassword','Password','matches[cpassword2]|max_length[20]');
+        $this->form_validation->set_rules('cpassword2','Confirm Password','matches[cpassword]|max_length[20]');
+        $this->form_validation->set_rules('mobile','Mobile Number','required|min_length[10]');
+        
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->loadUserEdit();
+        }
+        else
+        {
+            $name = $this->security->xss_clean($this->input->post('fname'));
+            $email = $this->security->xss_clean($this->input->post('email'));
+            $password = $this->input->post('cpassword');
+            $mobile = $this->security->xss_clean($this->input->post('mobile'));
+            $oldPassword = $this->input->post('oldpassword');
+
+            $userInfo = array();
+
+            if(empty($password))
+            {
+            $userInfo = array('email'=>$email,'name'=>$name,
+                            'mobile'=>$mobile, 'status'=>1, 'updatedBy'=>$this->vendorId, 'updatedDtm'=>date('Y-m-d H:i:s'));
+            }
+            else
+            {
+                $resultPas = $this->user_model->matchOldPassword($this->vendorId, $oldPassword);
+            
+                if(empty($resultPas))
+                {
+                $this->session->set_flashdata('nomatch', 'Eski şifreniz doğru değil');
+                redirect('userEdit');
+                }
+                else
+                {
+                $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password),
+                    'name'=>ucwords($name), 'mobile'=>$mobile,'status'=>1, 'updatedBy'=>$this->vendorId, 
+                    'updatedDtm'=>date('Y-m-d H:i:s'));
+                }
+            }
+            
+            $result = $this->user_model->editUser($userInfo, $userId);
+            
+            if($result == true)
+            {
+                $process = 'Hesap Ayarları Güncelleme';
+                $processFunction = 'User/updateUser';
+                $this->logrecord($process,$processFunction);
+
+                $this->session->set_flashdata('success', 'Hesap Ayarlarınız başarıyla güncellendi');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Hesap Ayarlarını güncelleme başarısız');
+            }
+            
+            redirect('userEdit');
+        }
+    }
+
+
     
     /**
-     * This function is used to load the change password screen
+     * This function is used to load the change password view
      */
     function loadChangePass()
     {

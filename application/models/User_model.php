@@ -450,6 +450,7 @@ class User_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tbl_users as BaseTbl');
+        $this->db->where('isDeleted', 0);
         $query = $this->db->get();
         return $query->num_rows();
     }
