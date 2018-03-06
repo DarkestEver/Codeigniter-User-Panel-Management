@@ -52,8 +52,6 @@
 
                 url: "http://cdn.datatables.net/plug-ins/1.10.12/i18n/Turkish.json"
             },
-            // true ise row seçilebilir olur
-            select: true,
             buttons: [{
                     extend: "print",
                     text: "Yazdır",
