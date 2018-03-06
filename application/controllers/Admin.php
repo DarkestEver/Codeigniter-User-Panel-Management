@@ -119,7 +119,7 @@ class Admin extends BaseController
                     $this->session->set_flashdata('error', 'Kullanıcı oluşturma başarısız');
                 }
                 
-                redirect('addNew');
+                redirect('userListing');
             }
         }
 

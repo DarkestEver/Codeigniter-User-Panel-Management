@@ -20,31 +20,43 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Kullanıcı Listesi</h3>
-                        <div class="box-tools">
-                            <form action="<?php echo base_url() ?>userListing" method="POST" id="searchList">
-                                <div class="input-group">
-                                    <input type="text" name="searchText" value="<?php echo $searchText; ?>" class="form-control input-sm pull-right" style="width: 150px;"
-                                        placeholder="Arama" />
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-default searchList">
-                                            <i class="fa fa-search"></i>
-                                        </button>
                                     </div>
+                      <!-- /.box-header -->
+          <div class="box-body table-responsive no-padding">
+            <?php
+                    $this->load->helper('form');
+                    $error = $this->session->flashdata('error');
+                    if($error)
+                    {
+                ?>
+              <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $this->session->flashdata('error'); ?>
                                 </div>
-                            </form>
+              <?php } ?>
+              <?php  
+                    $success = $this->session->flashdata('success');
+                    if($success)
+                    {
+                ?>
+              <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <?php echo $this->session->flashdata('success'); ?>
                         </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+              <?php } ?>
+              <div class="panel-body">
+                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                  <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Ad</th>
                                 <th>Email</th>
                                 <th>Telefon Numarası</th>
                                 <th>Yetki</th>
-                                <th class="text-center">İşlemler</th>
+                                <th>İşlemler</th>
                             </tr>
+                  </thead>
+                  <tbody>
                             <?php
                     if(!empty($userRecords))
                     {
@@ -83,13 +95,11 @@
                         }
                     }
                     ?>
+                  </tbody>
                         </table>
-
+              </div>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                        <?php echo $this->pagination->create_links(); ?>
-                    </div>
                 </div>
                 <!-- /.box -->
             </div>
@@ -97,14 +107,3 @@
     </section>
 </div>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/common.js" charset="utf-8"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        jQuery('ul.pagination li a').click(function (e) {
-            e.preventDefault();
-            var link = jQuery(this).get(0).href;
-            var value = link.substring(link.lastIndexOf('/') + 1);
-            jQuery("#searchList").attr("action", baseURL + "userListing/" + value);
-            jQuery("#searchList").submit();
-        });
-    });
-</script>
